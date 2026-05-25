@@ -1,0 +1,13 @@
+build/
+
+__pycache__
+.cache
+.DS_STORE
+
+minesweeper
+minesweeper.exe
+minesweeper.dSYM
+
+scratchpad
+list.todo
+op.txt
