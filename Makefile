@@ -2,7 +2,7 @@
 SOURCE  = src
 BUILD   = build
 INCLUDE = include
-BINARY  = minesweeper
+BINARY  = snake
 ##
 
 ##
@@ -18,7 +18,7 @@ LIBS      = -lncurses
 STD       = -std=c17
 DEP_FLAGS = -MP -MD
 OPT       = -O2
-DEFS      = -D VERSION="0.0.1b"
+DEFS      = -D VERSION="(char*)(\"0.0.1b\")"
 CFLAGS    = $(STD) $(OPT) $(WARNINGS) $(DEP_FLAGS) -I$(INCLUDE) $(DEFS)
 ##
 
