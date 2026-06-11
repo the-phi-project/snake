@@ -4,10 +4,9 @@
 
 #include <ncurses.h>
 
+#include "constants.h"
 #include "colors.h"
-
-#define FULL_ROWS 22 // header, game, footer
-#define FULL_COLS 50 // size border, game, side border
+#include "gameloop.h"
 
 
 
@@ -40,6 +39,9 @@ int main(int argc, char** argv) {
 		return EXIT_FAILURE;
 	}
 
+	curs_set(0); // make the cursor invisible
+
+	gameloop(maxy, maxx);
 
 	reset_shell_mode(); // resets colors for regular terminal use
 	endwin();

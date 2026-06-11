@@ -20,4 +20,5 @@
 /// character which requires a separate library
 void initColors();
 
+
 #endif /* SNAKE_COLORS_H */
