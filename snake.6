@@ -1,1 +1,38 @@
-man page
+.TH snake 6 "12 July 2026" "man page version 0.0.1"
+
+.SH NAME
+snake - Fun little game where you, as a snake, try to eat as many apples as possible. Written in pure C using ncurses.
+.I (https://www.github.com/the-phi-project/snake)
+
+.SH RULES
+First, select your difficulty (when prompted) using left/right arrow keys and the return (enter) key.
+
+.B EASY: 8 extra steps, 3 deciseconds per tick
+
+.B NORMAL: 6 extra steps, 2 deciseconds per tick
+
+.B HARD: 4 extra steps, 1 decisecond per tick
+
+Once you've loaded into the game, use all four arrow keys to direct the snake around the field towards
+the red apples that spawn in occasionally to make the snake larger, and gain points.
+If the head of your snake, indicated with a blue coloring, hits a wall or any other part of your snake,
+the snake dies and you must restart.
+
+.SH SYNOPSIS
+.B "snake [OPTIONAL: -v | --version]"
+
+.SH SEE ALSO
+.B "All projects below are located at"
+.I https://www.github.com/the-phi-project/
+
+.I "khuzdoor     "
+Hide encrypted data inside images, and soon audio/video; steganography
+
+.I "phi     "
+Quantum-Safe TUI/CLI Encryption/Decryption Tool with a Contact Book
+
+.I "VEIL     "
+Virtual Environment for Invisible Logins: TUI/CLI anonymous ephemeral account creator
+
+.SH AUTHORS
+.B "Zevi Berlin     <zeviberlin@gmail.com>"
