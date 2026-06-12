@@ -24,6 +24,12 @@ typedef struct Snake {
   struct snake_t* tail;
 } Snake;
 
+struct position {
+    int y;
+    int x;
+};
+
+
 Snake* CreateSnake(int starty, int startx);
 
 void SnakeMoveAddSection(Snake* snake, int direction);

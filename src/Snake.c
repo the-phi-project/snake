@@ -64,11 +64,6 @@ AND PRODUCES ASSEMBLY THAT STORES ALL VALUES
 IN CPU REGISTERS, NO MEMORY USED!
 */
 
-struct position {
-  int y;
-  int x;
-};
-
 void MoveSnake(Snake* snake, int direction) {
   snake_t* node = snake->head;
   if (!node) return;
