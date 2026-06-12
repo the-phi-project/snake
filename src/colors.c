@@ -2,7 +2,7 @@
 
 #include <ncurses.h>
 
-void initColors() {
+void initColors() {/*
   if (can_change_color()) { // ALL OF THOSE THIRD NUMBERS ARE MAGIC NUMBERS FOR 8-BIT COLORS
     init_pair(GREEN, COLOR_BLACK, 22);
 
@@ -35,5 +35,21 @@ void initColors() {
     init_pair(BLUE, COLOR_BLACK, COLOR_BLUE);
 
     init_pair(VIOLET, COLOR_BLACK, COLOR_MAGENTA);
-  }
+  }*/
+
+  init_pair(RED, COLOR_BLACK, COLOR_RED);
+
+  init_pair(GOLD, COLOR_BLACK, COLOR_YELLOW);
+
+  init_pair(CYAN, COLOR_BLACK, COLOR_CYAN);
+
+  init_pair(WHITE_CYAN, COLOR_WHITE, COLOR_CYAN);
+
+  init_pair(BLUE, COLOR_BLACK, COLOR_BLUE);
+
+  init_pair(VIOLET, COLOR_BLACK, COLOR_MAGENTA);
+
+  init_pair(WHITE, COLOR_WHITE, COLOR_WHITE);
+  
+  init_pair(BLACK, COLOR_BLACK, COLOR_BLACK);
 }

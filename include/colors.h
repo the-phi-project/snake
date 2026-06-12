@@ -13,6 +13,8 @@
 #define WHITE_CYAN 6
 #define BLUE 7
 #define VIOLET 8
+#define WHITE 9
+#define BLACK 10
 
 /// This uses "inverted" color pairs because the game
 /// can then use the space (' ') character with the

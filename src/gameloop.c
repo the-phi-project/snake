@@ -16,7 +16,8 @@ void gameloop(int maxy, int maxx) {
   int startx = (maxx - FULL_COLS) / 2;
 
   viewport = createGameWindow(starty, startx, FULL_COLS, FULL_ROWS);
-  checkerFillWindow(viewport, GREEN, DARK_GREEN);
+  //checkerFillWindow(viewport, GREEN, DARK_GREEN);
+  fillWindow(viewport, WHITE);
 
   /* FOOTER */
   wattron(viewport, COLOR_PAIR(WHITE_CYAN) | A_BOLD);
@@ -38,7 +39,7 @@ void gameloop(int maxy, int maxx) {
   halfdelay(2); // make sure that the user clicks a key in 2/10 seconds
 
   int ch, dir;
-  while (true /* not dead */) { // 3 is the key number for ^C
+  while (!isSnakeDead(snake)) { // 3 is the key number for ^C
     struct position tail_pos = { snake->tail->y, snake->tail->x };
 
     ch = getch();
@@ -70,10 +71,12 @@ void gameloop(int maxy, int maxx) {
 
     // compiler optimized the ternary away pretty much, thank goodness
     // this is where that useful fact below at the checker function comes into play
-    mvwaddch(
+    mvwaddch(/*
       viewport, tail_pos.y, tail_pos.x,
       ' ' | COLOR_PAIR(((tail_pos.y % 2 == 0) ? ((tail_pos.x % 2 == 0) ? GREEN : DARK_GREEN)
-                                              : ((tail_pos.x % 2 == 0) ? DARK_GREEN : GREEN))));
+                                              : ((tail_pos.x % 2 == 0) ? DARK_GREEN : GREEN)))*/
+      viewport, tail_pos.y, tail_pos.x, ' ' | COLOR_PAIR(WHITE)
+    );
 
     wrefresh(viewport);
     refresh();
@@ -100,6 +103,7 @@ and on all EVEN rows, all ODD columns are color2
 
 (this fun fact is useful above when clearing the snake's tail's position)
 */
+/*
 void checkerFillWindow(WINDOW* win, short color1, short color2) {
   int height, width;
   getmaxyx(win, height, width);
@@ -118,18 +122,32 @@ void checkerFillWindow(WINDOW* win, short color1, short color2) {
   wmove(win, 0, 0);
   wrefresh(win);
 }
+*/
+void fillWindow(WINDOW* win, short color) {
+  int height, width;
+  getmaxyx(win, height, width);
+
+  for (int row = 1; row < height - 1; row++) {
+    for (int col = 1; col < width - 1; col++) {
+      mvwaddch(win, row, col, ' ' | COLOR_PAIR(color));
+    }
+  }
+
+  wrefresh(win);
+}
 
 void renderSnake(WINDOW* win, Snake* snake) {
   snake_t* node = snake->head;
 
   while (node) {
-    mvwaddch(win, node->y, node->x, '=' | COLOR_PAIR(node->color));
+    mvwaddch(win, node->y, node->x, ' ' | COLOR_PAIR(node->color));
     // wrefresh(win);
 
     node = node->next;
   }
 }
 
-bool isSnakeDead(WINDOW* win, Snake* snake) {
-  return false;
+bool isSnakeDead(Snake* snake) {
+  if (!snake->head) return true;
+  return ((snake->head->y <= 0) || (snake->head->y >= FULL_ROWS)) || ((snake->head->x <= 0) || (snake->head->x >= FULL_COLS));
 }

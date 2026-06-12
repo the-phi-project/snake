@@ -16,11 +16,12 @@ void gameloop(int maxy, int maxx);
 
 WINDOW* createGameWindow(int starty, int startx, int width, int height);
 
-void checkerFillWindow(WINDOW* win, short color1, short color2);
+// void checkerFillWindow(WINDOW* win, short color1, short color2);
+void fillWindow(WINDOW* win, short color);
 
 void renderSnake(WINDOW* win, Snake* snake);
 
-bool isSnakeDead(WINDOW* win, Snake* snake);
+bool isSnakeDead(Snake* snake);
 
 
 #endif /* SNAKE_GAMELOOP_H */
