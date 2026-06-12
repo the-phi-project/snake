@@ -2,7 +2,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 #include <ncurses.h>
 
@@ -48,7 +47,6 @@ void gameloop(int maxy, int maxx) {
     bool is_alive;
   } Apple;
 
-  srand(time(NULL)); // just to decide when an apple drops, 25% of the time
   int less_than_threshold = RAND_MAX / 4;
 
   Apple global_apple = { 0, 0, -1, { 0, 0 }, false }; // only the false matters
@@ -104,8 +102,8 @@ void gameloop(int maxy, int maxx) {
 
     if (!global_apple.is_alive && rand() <= less_than_threshold) {
       struct position pos = {
-          rand() % FULL_ROWS,
-          rand() % FULL_COLS
+        randomInRange(2, FULL_ROWS - 3),
+        randomInRange(2, FULL_COLS - 3)
       };
 
       // this will be changed when I introduce difficulty
@@ -139,7 +137,7 @@ void gameloop(int maxy, int maxx) {
 
     /* SCORE */
     wattron(viewport, COLOR_PAIR(WHITE_CYAN) | A_BOLD);
-    mvwprintw(viewport, 0, 2, "%d", score);
+    mvwprintw(viewport, 0, 2, "%d  @ %s", score, "NORMAL");
     wattroff(viewport, COLOR_PAIR(WHITE_CYAN) | A_BOLD);
     /* */
 
@@ -162,32 +160,6 @@ WINDOW* createGameWindow(int starty, int startx, int width, int height) {
   return local_win;
 }
 
-/*
-This function means that on all ODD rows, all EVEN columns are color2
-and on all EVEN rows, all ODD columns are color2
-
-(this fun fact is useful above when clearing the snake's tail's position)
-*/
-/*
-void checkerFillWindow(WINDOW* win, short color1, short color2) {
-  int height, width;
-  getmaxyx(win, height, width);
-
-  int ch = ' ';
-  bool col1 = true;
-  for (int row = 1; row < height - 1; row++) { // start below header and end above footer
-    for (int col = 1; col < width - 1; col++) { // go from inside one border to the other
-      mvwaddch(win, row, col, ch | (col1 ? COLOR_PAIR(color1) : COLOR_PAIR(color2)));
-      col1 = !col1;
-    }
-
-    col1 = !col1; // staggers it in a checker pattern
-  }
-
-  wmove(win, 0, 0);
-  wrefresh(win);
-}
-*/
 void fillWindow(WINDOW* win, short color) {
   int height, width;
   getmaxyx(win, height, width);

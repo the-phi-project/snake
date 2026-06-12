@@ -9,4 +9,10 @@
 #define DIR_DOWN 2
 #define DIR_LEFT 3
 
+#include <stdlib.h>
+
+inline int randomInRange(int min, int max) {
+  return min + rand() / (RAND_MAX / (max - min + 1) + 1);
+}
+
 #endif /* SNAKE_CONSTANTS_H */

@@ -1,6 +1,7 @@
 #include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
+#include <time.h>
 
 #include <ncurses.h>
 
@@ -41,6 +42,8 @@ int main(int argc, char** argv) {
 
 	curs_set(0); // make the cursor invisible
 	wbkgd(stdscr, ' ' | COLOR_PAIR(BLACK)); // set a black background
+
+	srand(time(NULL));
 
 	gameloop(maxy, maxx);
 
