@@ -12,9 +12,9 @@
 
 
 
-void gameloop(int maxy, int maxx);
+void gameloop(int maxy, int maxx, int difficulty);
 
-WINDOW* createGameWindow(int starty, int startx, int width, int height);
+WINDOW* createGameWindow(int starty, int startx, int width, int height, short color);
 
 void fillWindow(WINDOW* win, short color);
 

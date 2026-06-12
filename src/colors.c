@@ -37,9 +37,13 @@ void initColors() {/*
     init_pair(VIOLET, COLOR_BLACK, COLOR_MAGENTA);
   }*/
 
+  init_pair(WHITE_GREEN, COLOR_WHITE, COLOR_GREEN);
+
   init_pair(RED, COLOR_BLACK, COLOR_RED);
 
   init_pair(GOLD, COLOR_BLACK, COLOR_YELLOW);
+
+  init_pair(WHITE_GOLD, COLOR_WHITE, COLOR_YELLOW);
 
   init_pair(CYAN, COLOR_BLACK, COLOR_CYAN);
 

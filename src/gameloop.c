@@ -11,19 +11,31 @@
 
 
 
-void gameloop(int maxy, int maxx) {
+void gameloop(int maxy, int maxx, int difficulty) {
+  const int diff_dist = ((difficulty == EASY)     ? EASY_BUFFER
+                         : (difficulty == NORMAL) ? NORMAL_BUFFER
+                                                  : HARD_BUFFER);
+  const char* diff_str = ((difficulty == EASY)     ? "EASY"
+                          : (difficulty == NORMAL) ? "NORMAL"
+                                                   : "HARD");
+  const int diff_color = ((difficulty == EASY)     ? EASY_COLOR
+                          : (difficulty == NORMAL) ? NORMAL_COLOR
+                                                   : HARD_COLOR);
+
+  /* */
+
+
   WINDOW* viewport;
   int starty = (maxy - FULL_ROWS) / 2;
   int startx = (maxx - FULL_COLS) / 2;
 
-  viewport = createGameWindow(starty, startx, FULL_COLS, FULL_ROWS);
-  //checkerFillWindow(viewport, GREEN, DARK_GREEN);
+  viewport = createGameWindow(starty, startx, FULL_COLS, FULL_ROWS, diff_color);
   fillWindow(viewport, WHITE);
 
   /* FOOTER */
-  wattron(viewport, COLOR_PAIR(WHITE_CYAN) | A_BOLD);
+  wattron(viewport, COLOR_PAIR(diff_color) | A_BOLD);
   mvwprintw(viewport, FULL_ROWS - 1, 2, "The Phi Project - snake    :    V%s - 2026", VERSION);
-  wattroff(viewport, COLOR_PAIR(WHITE_CYAN) | A_BOLD);
+  wattroff(viewport, COLOR_PAIR(diff_color) | A_BOLD);
 
   wmove(viewport, 0, 0);
   wrefresh(viewport);
@@ -106,8 +118,7 @@ void gameloop(int maxy, int maxx) {
         randomInRange(2, FULL_COLS - 3)
       };
 
-      // this will be changed when I introduce difficulty
-      int suboptimal = abs(snake->head->y - pos.y) + abs(snake->head->x - pos.x) + 5;
+      int suboptimal = abs(snake->head->y - pos.y) + abs(snake->head->x - pos.x) + diff_dist;
 
       global_apple.ticks_alive = 0;
       global_apple.lifespan = suboptimal;
@@ -136,24 +147,25 @@ void gameloop(int maxy, int maxx) {
     }
 
     /* SCORE */
-    wattron(viewport, COLOR_PAIR(WHITE_CYAN) | A_BOLD);
-    mvwprintw(viewport, 0, 2, "%d  @ %s", score, "NORMAL");
-    wattroff(viewport, COLOR_PAIR(WHITE_CYAN) | A_BOLD);
+    wattron(viewport, COLOR_PAIR(diff_color) | A_BOLD);
+    mvwprintw(viewport, 0, 2, "%d  @ %s", score, diff_str);
+    wattroff(viewport, COLOR_PAIR(diff_color) | A_BOLD);
     /* */
 
     wrefresh(viewport);
     refresh();
   }
 
+  delwin(viewport);
   DestroySnake(snake);
 }
 
-WINDOW* createGameWindow(int starty, int startx, int width, int height) {
+WINDOW* createGameWindow(int starty, int startx, int width, int height, short color) {
   refresh();
   WINDOW* local_win = newwin(height, width, starty, startx);
   
   // creates a border around the window
-  int b_ch = ' ' | COLOR_PAIR(CYAN); // border character
+  int b_ch = ' ' | COLOR_PAIR(color); // border character
   wborder(local_win, b_ch, b_ch, b_ch, b_ch, b_ch, b_ch, b_ch, b_ch);
 
   wrefresh(local_win);

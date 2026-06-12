@@ -8,6 +8,7 @@
 #include "constants.h"
 #include "colors.h"
 #include "gameloop.h"
+#include "getdiff.h"
 
 
 
@@ -22,7 +23,7 @@ int main(int argc, char** argv) {
 	initscr();
 	raw(); // every character is simply passed to program rather than waiting for terminal driver
 	noecho(); // dont echo the typed characters while doing `getch()`
-	keypad(stdscr, true); // allow arrow key usage
+	keypad(stdscr, TRUE); // allow arrow key usage
 
 	if (!has_colors()) {
 		endwin();
@@ -45,7 +46,9 @@ int main(int argc, char** argv) {
 
 	srand(time(NULL));
 
-	gameloop(maxy, maxx);
+	int difficulty = getdiff(maxy, maxx);
+
+	gameloop(maxy, maxx, difficulty);
 
 	reset_shell_mode(); // resets colors for regular terminal use
 	endwin();
