@@ -35,7 +35,7 @@ RESET  = \033[0m
 
 all: $(BINARY)
 
-$(BINARY): $(OBJECTS)
+$(BINARY): $(OBJECTS) $(BUILD)
 	@echo "$(BOLD)$(BLUE)==== Linking ====$(RESET)"
 	@echo "$(BLUE)Producing Binary$(RESET)"
 	$(CC) $(OBJECTS) $(LIBS) -o $(BINARY)
@@ -46,6 +46,9 @@ $(BUILD)/%.o: $(SOURCE)/%.c
 	@echo "$(YELLOW)Building $<$(RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(BOLD)$(GREEN)OK$(RESET)"
+
+$(BUILD):
+	@mkdir -p build/
 
 clean:
 	@echo "$(BOLD)$(ORANGE)==== Cleaning ====$(RESET)"
