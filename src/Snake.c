@@ -58,41 +58,40 @@ void DestroySnake(Snake* snake) {
   free(snake);
 }
 
+/*
+THE COMPILER OPTIMIZES AWAY THIS STRUCT ENTIRELY
+AND PRODUCES ASSEMBLY THAT STORES ALL VALUES
+IN CPU REGISTERS, NO MEMORY USED!
+*/
+
+struct position {
+  int y;
+  int x;
+};
+
 void MoveSnake(Snake* snake, int direction) {
   snake_t* node = snake->head;
   if (!node) return;
 
-  int y1 = node->y, x1 = node->x;
-  int y2, x2;
+  struct position prev = { node->y, node->x };
 
   switch (direction) {
-    case DIR_UP:
-      snake->head->y--;
-      break;
-    case DIR_RIGHT:
-      snake->head->x++;
-      break;
-    case DIR_DOWN:
-      snake->head->y++;
-      break;
-    case DIR_LEFT:
-      snake->head->x--;
-      break;
+    case DIR_UP: snake->head->y--; break;
+    case DIR_RIGHT: snake->head->x++; break;
+    case DIR_DOWN: snake->head->y++; break;
+    case DIR_LEFT: snake->head->x--; break;
   }
 
   node = snake->head->next;
 
   // there has GOT to be a better way to do this
   while (node) {
-    y2 = node->y;
-    x2 = node->x;
+    struct position cur = { node->y, node->x };
 
-    node->y = y1;
-    node->x = x1;
+    node->y = prev.y;
+    node->x = prev.x;
 
-    y1 = y2;
-    x1 = x2;
-
+    prev = cur;
     node = node->next;
   }
 }
