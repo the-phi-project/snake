@@ -1,6 +1,8 @@
 #include "gameloop.h"
 
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 #include <ncurses.h>
 
@@ -34,7 +36,27 @@ void gameloop(int maxy, int maxx) {
     return;
   }
 
+  /* APPLES */
+  typedef struct Apple {
+    int ticks_alive;
+    int lifespan;
+
+    short color;
+
+    struct position pos;
+
+    bool is_alive;
+  } Apple;
+
+  srand(time(NULL)); // just to decide when an apple drops, 10% of the time
+  int less_than_threshold = RAND_MAX / 10;
+
+  Apple global_apple = { 0, 0, -1, { 0, 0 }, false }; // only the false matters
+  /* */
+
   /* TODO: PROMPT FOR DIFFICULTY ? */
+
+  int score = 0;
 
   halfdelay(2); // make sure that the user clicks a key in 2/10 seconds
 
@@ -77,6 +99,43 @@ void gameloop(int maxy, int maxx) {
                                               : ((tail_pos.x % 2 == 0) ? DARK_GREEN : GREEN)))*/
       viewport, tail_pos.y, tail_pos.x, ' ' | COLOR_PAIR(WHITE)
     );
+
+    /* */
+
+    if (!global_apple.is_alive && rand() <= less_than_threshold) {
+      struct position pos = {
+          rand() % FULL_ROWS,
+          rand() % FULL_COLS
+      };
+
+      // this will be changed when I introduce difficulty
+      int suboptimal = abs(snake->head->y - pos.y) + abs(snake->head->x - pos.x) + 2;
+
+      global_apple.ticks_alive = 0;
+      global_apple.lifespan = suboptimal;
+      global_apple.color = RED;
+      global_apple.pos = pos;
+      global_apple.is_alive = true;
+
+      mvwaddch(viewport, pos.y, pos.x, ' ' | COLOR_PAIR(global_apple.color));
+    }
+
+    if (global_apple.is_alive) {
+      global_apple.ticks_alive++;
+      if (global_apple.ticks_alive >= global_apple.lifespan) {
+        global_apple.is_alive = false;
+        mvwaddch(viewport, global_apple.pos.y, global_apple.pos.x, ' ' | COLOR_PAIR(WHITE));
+      } else {
+        if (global_apple.pos.y == snake->head->y && global_apple.pos.x == snake->head->x) {
+          // no need to clear apple because snake already derenders it
+          score += (global_apple.color == RED ? 1 : 3);
+
+          global_apple.is_alive = false;
+          
+          SnakeMoveAddSection(snake, dir);
+        }
+      }
+    }
 
     wrefresh(viewport);
     refresh();

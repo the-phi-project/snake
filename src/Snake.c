@@ -15,7 +15,7 @@ Snake* CreateSnake(int starty, int startx) {
     return NULL;
   }
 
-  head->color = VIOLET;
+  head->color = BLUE;
   head->y = starty;
   head->x = startx;
   head->prev = NULL;

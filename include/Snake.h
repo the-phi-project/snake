@@ -10,7 +10,7 @@
 
 
 typedef struct snake_t {
-  int color;
+  short color;
 
   int y;
   int x;
