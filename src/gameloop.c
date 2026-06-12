@@ -48,8 +48,8 @@ void gameloop(int maxy, int maxx) {
     bool is_alive;
   } Apple;
 
-  srand(time(NULL)); // just to decide when an apple drops, 10% of the time
-  int less_than_threshold = RAND_MAX / 10;
+  srand(time(NULL)); // just to decide when an apple drops, 25% of the time
+  int less_than_threshold = RAND_MAX / 4;
 
   Apple global_apple = { 0, 0, -1, { 0, 0 }, false }; // only the false matters
   /* */
@@ -109,7 +109,7 @@ void gameloop(int maxy, int maxx) {
       };
 
       // this will be changed when I introduce difficulty
-      int suboptimal = abs(snake->head->y - pos.y) + abs(snake->head->x - pos.x) + 2;
+      int suboptimal = abs(snake->head->y - pos.y) + abs(snake->head->x - pos.x) + 5;
 
       global_apple.ticks_alive = 0;
       global_apple.lifespan = suboptimal;
@@ -136,6 +136,12 @@ void gameloop(int maxy, int maxx) {
         }
       }
     }
+
+    /* SCORE */
+    wattron(viewport, COLOR_PAIR(WHITE_CYAN) | A_BOLD);
+    mvwprintw(viewport, 0, 2, "%d", score);
+    wattroff(viewport, COLOR_PAIR(WHITE_CYAN) | A_BOLD);
+    /* */
 
     wrefresh(viewport);
     refresh();
@@ -208,5 +214,22 @@ void renderSnake(WINDOW* win, Snake* snake) {
 
 bool isSnakeDead(Snake* snake) {
   if (!snake->head) return true;
-  return ((snake->head->y <= 0) || (snake->head->y >= FULL_ROWS)) || ((snake->head->x <= 0) || (snake->head->x >= FULL_COLS));
+
+  bool hit_walls = (
+    (snake->head->y <= 0) || (snake->head->y >= FULL_ROWS - 1)) ||
+    ((snake->head->x <= 0) || (snake->head->x >= FULL_COLS - 1)
+  );
+
+  bool hit_self = false;
+  snake_t* node = snake->head->next;
+  while (node) {
+    if (node->y == snake->head->y && node->x == snake->head->x) {
+      hit_self = true;
+      break;
+    }
+
+    node = node->next;
+  }
+
+  return hit_walls || hit_self;
 }
