@@ -37,22 +37,25 @@ void gameloop(int maxy, int maxx) {
 
   halfdelay(2); // make sure that the user clicks a key in 2/10 seconds
 
-  int ch;
+  int ch, dir;
   while (true /* not dead */) { // 3 is the key number for ^C
+    struct position tail_pos = { snake->tail->y, snake->tail->x };
+
     ch = getch();
     if (ch != -1) { // the user has clicked something
       switch (ch) {
+        // all these ternaries are to ensure you cant go immediately in the opposite direction
         case KEY_UP:
-          SnakeMoveAddSection(snake, DIR_UP);
+          dir = (dir == DIR_DOWN ? DIR_DOWN : DIR_UP);
           break;
         case KEY_RIGHT:
-          SnakeMoveAddSection(snake, DIR_RIGHT);
+          dir = (dir == DIR_LEFT ? DIR_LEFT : DIR_RIGHT);
           break;
         case KEY_DOWN:
-          SnakeMoveAddSection(snake, DIR_DOWN);
+          dir = (dir == DIR_UP ? DIR_UP : DIR_DOWN);
           break;
         case KEY_LEFT:
-          SnakeMoveAddSection(snake, DIR_LEFT);
+          dir = (dir == DIR_RIGHT ? DIR_RIGHT: DIR_LEFT);
           break;
         case 3: // ^C key or q key
           return;
@@ -61,8 +64,18 @@ void gameloop(int maxy, int maxx) {
           continue;
       }
     }
+
+    MoveSnake(snake, dir);
     renderSnake(viewport, snake);
 
+    // compiler optimized the ternary away pretty much, thank goodness
+    // this is where that useful fact below at the checker function comes into play
+    mvwaddch(
+      viewport, tail_pos.y, tail_pos.x,
+      ' ' | COLOR_PAIR(((tail_pos.y % 2 == 0) ? ((tail_pos.x % 2 == 0) ? GREEN : DARK_GREEN)
+                                              : ((tail_pos.x % 2 == 0) ? DARK_GREEN : GREEN))));
+
+    wrefresh(viewport);
     refresh();
   }
 
@@ -81,6 +94,12 @@ WINDOW* createGameWindow(int starty, int startx, int width, int height) {
   return local_win;
 }
 
+/*
+This function means that on all ODD rows, all EVEN columns are color2
+and on all EVEN rows, all ODD columns are color2
+
+(this fun fact is useful above when clearing the snake's tail's position)
+*/
 void checkerFillWindow(WINDOW* win, short color1, short color2) {
   int height, width;
   getmaxyx(win, height, width);
@@ -105,7 +124,7 @@ void renderSnake(WINDOW* win, Snake* snake) {
 
   while (node) {
     mvwaddch(win, node->y, node->x, '=' | COLOR_PAIR(node->color));
-    wrefresh(win);
+    // wrefresh(win);
 
     node = node->next;
   }
