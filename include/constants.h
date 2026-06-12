@@ -19,9 +19,9 @@
 #define HARD_COLOR WHITE_GOLD
 
 // to be added to distance for apple lifespan
-#define EASY_BUFFER 7
-#define NORMAL_BUFFER 5
-#define HARD_BUFFER 3
+#define EASY_BUFFER 8
+#define NORMAL_BUFFER 6
+#define HARD_BUFFER 4
 
 #include <stdlib.h>
 

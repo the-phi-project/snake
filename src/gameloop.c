@@ -22,6 +22,10 @@ void gameloop(int maxy, int maxx, int difficulty) {
                           : (difficulty == NORMAL) ? NORMAL_COLOR
                                                    : HARD_COLOR);
 
+  const int diff_delay = ((difficulty == EASY)     ? 3
+                          : (difficulty == NORMAL) ? 2
+                                                   : 1);
+
   /* */
 
 
@@ -68,7 +72,7 @@ void gameloop(int maxy, int maxx, int difficulty) {
 
   int score = 0;
 
-  halfdelay(2); // make sure that the user clicks a key in 2/10 seconds
+  halfdelay(diff_delay); // make sure that the user clicks a key in x/10 seconds
 
   int ch, dir;
   while (!isSnakeDead(snake)) { // 3 is the key number for ^C
