@@ -33,9 +33,9 @@ BOLD   = \033[1m
 RESET  = \033[0m
 ##
 
-all: $(BINARY)
+all: $(BUILD) $(BINARY)
 
-$(BINARY): $(OBJECTS) $(BUILD)
+$(BINARY): $(OBJECTS)
 	@echo "$(BOLD)$(BLUE)==== Linking ====$(RESET)"
 	@echo "$(BLUE)Producing Binary$(RESET)"
 	$(CC) $(OBJECTS) $(LIBS) -o $(BINARY)
