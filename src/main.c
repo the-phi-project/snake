@@ -9,6 +9,7 @@
 #include "colors.h"
 #include "gameloop.h"
 #include "getdiff.h"
+#include "retry.h"
 
 
 
@@ -49,6 +50,23 @@ int main(int argc, char** argv) {
 	int difficulty = getdiff(maxy, maxx);
 
 	gameloop(maxy, maxx, difficulty);
+
+	erase();
+
+	int next = retry(maxy, maxx);
+	while (next != 0) {
+		erase();
+		
+		if (next == 2) {
+			difficulty = getdiff(maxy, maxx);
+		}
+
+    gameloop(maxy, maxx, difficulty);
+
+		erase();
+
+		next = retry(maxy, maxx);
+  }
 
 	reset_shell_mode(); // resets colors for regular terminal use
 	endwin();
