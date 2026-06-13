@@ -41,6 +41,8 @@ void initColors() {/*
 
   init_pair(RED, COLOR_BLACK, COLOR_RED);
 
+  init_pair(WHITE_RED, COLOR_WHITE, COLOR_RED);
+
   init_pair(GOLD, COLOR_BLACK, COLOR_YELLOW);
 
   init_pair(WHITE_GOLD, COLOR_WHITE, COLOR_YELLOW);

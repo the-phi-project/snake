@@ -18,7 +18,7 @@ LIBS      = -lncurses
 STD       = -std=c17
 DEP_FLAGS = -MP -MD
 OPT       = -O2
-DEFS      = -D VERSION="(char*)(\"0.0.3a\")"
+DEFS      = -D VERSION="(char*)(\"1.0.0a\")"
 CFLAGS    = $(STD) $(OPT) $(WARNINGS) $(DEP_FLAGS) -I$(INCLUDE) $(DEFS)
 ##
 

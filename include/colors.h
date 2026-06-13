@@ -8,14 +8,15 @@
 #define GREEN 1
 #define WHITE_GREEN 2
 #define RED 3
-#define GOLD 4
-#define WHITE_GOLD 5
-#define CYAN 6
-#define WHITE_CYAN 7
-#define BLUE 8
-#define VIOLET 9
-#define WHITE 10
-#define BLACK 11
+#define WHITE_RED 4
+#define GOLD 5
+#define WHITE_GOLD 6
+#define CYAN 7
+#define WHITE_CYAN 8
+#define BLUE 9
+#define VIOLET 10
+#define WHITE 11
+#define BLACK 12
 
 /// This uses "inverted" color pairs because the game
 /// can then use the space (' ') character with the

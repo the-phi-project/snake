@@ -30,7 +30,6 @@ int getdiff(int maxy, int maxx) {
   int ch;
   while ((ch = getch()) != 10) { // hardcoded ENTER key, !!!NOT!!! KEY_ENTER
     refresh();
-    printw("key: %s  ", keyname(ch));
     switch (ch) {
       case KEY_LEFT:
         current = max(0, current - 1);
