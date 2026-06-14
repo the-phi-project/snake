@@ -32,11 +32,11 @@ void SnakeMoveAddSection(Snake* snake, int direction) {
 
   snake_t* new_section = malloc(sizeof(*new_section));
   if (!new_section) return;
-  
+
   new_section->prev = snake->tail;
   new_section->next = NULL;
   new_section->color = BLACK;
-  
+
   new_section->y = snake->tail->y;
   new_section->x = snake->tail->x;
 

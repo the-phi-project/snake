@@ -64,7 +64,7 @@ WINDOW* drawGetDiffWin(int starty, int startx, int active) {
     if (i == active) {
       wattron(win, COLOR_PAIR(colors[i]));
     }
-    
+
     mvwaddstr(win, 3, xpositions[i], buttons[i]);
 
     if (i == active) {

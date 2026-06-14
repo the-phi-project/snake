@@ -144,7 +144,7 @@ void gameloop(int maxy, int maxx, int difficulty) {
           score += (global_apple.color == RED ? 1 : 3);
 
           global_apple.is_alive = false;
-          
+
           SnakeMoveAddSection(snake, dir);
         }
       }
@@ -167,7 +167,7 @@ void gameloop(int maxy, int maxx, int difficulty) {
 WINDOW* createGameWindow(int starty, int startx, int width, int height, short color) {
   refresh();
   WINDOW* local_win = newwin(height, width, starty, startx);
-  
+
   // creates a border around the window
   int b_ch = ' ' | COLOR_PAIR(color); // border character
   wborder(local_win, b_ch, b_ch, b_ch, b_ch, b_ch, b_ch, b_ch, b_ch);

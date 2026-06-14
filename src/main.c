@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
 	}
 	start_color(); // allow color mode
 	initColors(); // creates the custom colors for the game
-	
+
 	int maxy, maxx;
 	getmaxyx(stdscr, maxy, maxx);
 	if (maxy < FULL_ROWS || maxx < FULL_COLS) {
@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
 	int next = retry(maxy, maxx);
 	while (next != 0) {
 		erase();
-		
+
 		if (next == 2) {
 			difficulty = getdiff(maxy, maxx);
 		}
