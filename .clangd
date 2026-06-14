@@ -5,3 +5,16 @@ CompileFlags:
     - "-I../include"
     - "-std=c17"
     - '-D VERSION="(char*)(\"1.0.0a\")"'
+
+Diagnostics:
+  UnusedIncludes: Strict
+  ClangTidy:
+    Add:
+      - modernize-*
+      - performance-*
+      - bugprone-*
+
+InlayHints:
+  Enabled: Yes
+  ParameterNames: Yes
+  DeducedTypes: Yes
