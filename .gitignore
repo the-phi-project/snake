@@ -11,3 +11,6 @@ snake.dSYM
 scratchpad
 list.todo
 op.txt
+
+.vscode/
+.zed/
