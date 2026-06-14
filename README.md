@@ -26,10 +26,10 @@ git clone https://github.com/the-phi-project/snake
 cd snake/
 make
 
+./snake
 # if you choose, you could move the `snake` binary to /usr/bin/
 # or /usr/local/bin/ to create a global binary, in which case
-# you could omit the `./` below
-./snake
+# you could omit the `./` above
 ```
 
 ### Windows
